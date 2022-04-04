@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  sonarqube:
+    image: sonarqube:9.3-community
+    container_name: sonarqube
+    hostname: sonarqube
+    ports:
+      - 9000:9000
+    environment:
+      - sonar.jdbc.username=sonar
+      - sonar.jdbc.password=123465
+      - sonar.search.javaAdditionalOpts=-Dbootstrap.system_call_filter=false
+#    volumes:
+#      - <your-volume-path>/logs:/opt/sonarqube/logs
+#      - <your-volume-path>/data:/opt/sonarqube/data
+#      - <your-volume-path>/extensions:/opt/sonarqube/extensions

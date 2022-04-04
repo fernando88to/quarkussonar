@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id "org.sonarqube" version "3.3"
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'io.quarkus:quarkus-jacoco'
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy-jsonb'
+    implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'io.quarkus:quarkus-arc'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+}
+
+group 'com.fernando'
+version '1.0.0'
+
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+
+
+tasks.named('sonarqube').configure {
+    dependsOn test
+}
+
+
+//
+//sonarqube {
+//    properties {
+//        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/jacoco-report/*.xml"
+//        property "sonar.java.coveragePlugin", "jacoco"
+//    }
+//}
+
+
+sonarqube {
+    properties {
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/jacoco-report/*.xml"
+        property "sonar.java.coveragePlugin", "jacoco"
+    }
+}
+
+//sonarqube {
+//    properties {
+//        property 'sonar.verbose', 'true'
+//        property "sonar.host.url", "http://localhost:9000/"
+//        property "sonar.sourceEncoding","UTF-8"
+//        property "sonar.login", "0b14342a39ce6f9de1ddcd2acc853183eb8972a8"
+//        property "sonar.projectName", "quarkusproject"
+//        property "sonar.projectKey", "quarkusproject"
+//
+//        //property "sonar.dynamicAnalysis","reuseReports"
+//        property "sonar.clover.reportPath", file("build/jacoco-report/jacoco.xml").absolutePath
+//
+//        //property "sonar.projectBaseDir",""
+//        //property "sonar.sources","src/main/java"
+//        //property "sonar.exclusions"," **/*.properties,** /*.js,**/*.html"
+//        property "sonar.test.exclusions","**/*.properties"
+//    }
+//}
